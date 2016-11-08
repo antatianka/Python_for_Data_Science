@@ -1,12 +1,4 @@
 # Hangman game
-#
-
-# -----------------------------------
-# Helper code
-# You don't need to understand this helper code,
-# but you will have to know how to use the functions
-# (so be sure to read the docstrings!)
-
 import random
 
 WORDLIST_FILENAME = "words.txt"
@@ -38,14 +30,6 @@ def chooseWord(wordlist):
     print "I am thinking of a word that is", len(random.choice(wordlist)), "letters long."
     return random.choice(wordlist)
     
-    
-    
-
-# end of helper code
-# -----------------------------------
-
-# Load the list of words into the variable wordlist
-# so that it can be accessed from anywhere in the program
 wordlist = loadWords()
 
 def isWordGuessed(secretWord, lettersGuessed):
@@ -82,14 +66,10 @@ def getGuessedWord(secretWord, lettersGuessed):
         else:
             guessed_word += '_'
     return guessed_word   
-#secretWord = 'apple' 
-#lettersGuessed = ['e', 'i', 'k', 'p', 'r', 's']
-#print(getGuessedWord(secretWord, lettersGuessed))
-        
 
 
 
-#import string
+
 def getAvailableLetters(lettersGuessed):
     '''
     lettersGuessed: list, what letters have been guessed so far
@@ -102,9 +82,7 @@ def getAvailableLetters(lettersGuessed):
         if letter not in lettersGuessed:
             available_letters+= letter
     return available_letters        
-#lettersGuessed = ['e', 'i', 'k', 'p', 'r', 's']
-#print(getAvailableLetters(lettersGuessed))
-    
+
 
 def hangman(secretWord):
     '''
@@ -127,61 +105,35 @@ def hangman(secretWord):
     Follows the other limitations detailed in the problem write-up.
     '''
     count = 8
-    lettersGuessed = []
-    global lettersGuessed
-    
-   
-    
-          
-        
-    while count >0:
-            
+    lettersGuessed = []   
+    while count >0:   
 	print ("-------------")
 	print ("You have",  count,  "guesses left.")
-	alph = "abcdefghijklmnopqrstuvwxyz"
-        
+	alph = "abcdefghijklmnopqrstuvwxyz"   
         if len(lettersGuessed) == 0:
             print ("Available letters:", alph) 
         else:
 	    print ("Available letters:", available_letters_fact)
-    
 	letterGuessed = raw_input("Please guess a letter:")
-	if letterGuessed in lettersGuessed: 
-	    
-	    
+	if letterGuessed in lettersGuessed:	    
 	    print ("Oops! You've already guessed that letter:", guess_word_fact)  
-	    continue
-                           
+	    continue                
 	lettersGuessed  += letterGuessed
-              
 	result_fact = isWordGuessed(secretWord, lettersGuessed)
 	guess_word_fact = getGuessedWord(secretWord, lettersGuessed)    
 	available_letters_fact = getAvailableLetters(lettersGuessed) 
-	    
 	if letterGuessed in secretWord:
-    
 	    print ("Good guess:", guess_word_fact) 
 	else:
 	    print ("Oops! That letter is not in my word:", guess_word_fact)
 	    count -=1
-	
         if result_fact== True:
-	    
 	    print ("------------")
 	    print ("Congratulations, you won!")
 	    break
-	    
-    
     if not result_fact:	
         print ("-----------")
         print ("Sorry, you ran out of guesses. The word was else.") 
-                  
-            
-             
-        
-    
-
-
 
              
         
@@ -191,10 +143,6 @@ def hangman(secretWord):
 
 
 
-
-# When you've completed your hangman function, uncomment these two lines
-# and run this file to test! (hint: you might want to pick your own
-# secretWord while you're testing)
 
 secretWord = chooseWord(wordlist).lower()
 print secretWord
@@ -202,12 +150,3 @@ hangman(secretWord)
 
 
 
-#Loading word list from file...
-#55900 words loaded.
-#Welcome to the game, Hangman!
-#I am thinking of a word that is 4 letters long.
-#-------------
-#You have 8 guesses left.
-#Available letters: abcdefghijklmnopqrstuvwxyz
-#Please guess a letter: a
-#Good guess: _ a_ _
