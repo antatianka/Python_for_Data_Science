@@ -71,7 +71,13 @@ def getWordScore(word, n):
     n: integer (HAND_SIZE; i.e., hand size required for additional points)
     returns: int >= 0
     """
-    # TO DO ... <-- Remove this comment when you code this function
+    score = []
+    for letter in word:
+        score.append(SCRABBLE_LETTER_VALUES[letter])
+    letters_score = sum(score)*sum(score)*len(word)
+    if n == len(word):
+        letters_score += 50
+    return letters_score    
 
 
 
@@ -92,7 +98,7 @@ def displayHand(hand):
     """
     for letter in hand.keys():
         for j in range(hand[letter]):
-             print(letter,end=" ")       # print all on the same line
+            print(letter)       # print all on the same line
     print()                             # print an empty line
 
 #
