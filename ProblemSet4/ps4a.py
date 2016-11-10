@@ -148,7 +148,18 @@ def updateHand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-    # TO DO ... <-- Remove this comment when you code this function
+    copy_hand =  hand.copy()
+    
+    
+    copy_hand =  hand.copy()
+    
+    for letter in word:
+        if letter in copy_hand.keys():
+            if copy_hand[letter] > 0:
+                copy_hand[letter] = copy_hand[letter] -1
+    
+    
+    return copy_hand                     
 
 
 
@@ -166,8 +177,25 @@ def isValidWord(word, hand, wordList):
     hand: dictionary (string -> int)
     wordList: list of lowercase strings
     """
-    # TO DO ... <-- Remove this comment when you code this function
-
+    
+    hand_copy = hand.copy()
+    result = False
+    if word in wordList:
+        for letter in word:
+            if letter in hand_copy.keys():
+                if hand_copy[letter] > 0:
+                    hand_copy[letter] = hand_copy[letter]-1
+                    result = True
+                else:
+                    result = False
+                    break        
+            else:
+                result = False
+                break
+    return result
+                
+            
+            
 
 #
 # Problem #4: Playing a hand
@@ -180,7 +208,13 @@ def calculateHandlen(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
-    # TO DO... <-- Remove this comment when you code this function
+    
+    number = 0
+    for key in hand.keys():
+        if hand[key]>0:
+            number +=hand[key]
+    
+    return number
 
 
 
@@ -205,37 +239,51 @@ def playHand(hand, wordList, n):
       wordList: list of lowercase strings
       n: integer (HAND_SIZE; i.e., hand size required for additional points)
       
-    """
-    # BEGIN PSEUDOCODE <-- Remove this comment when you code this function; do your coding within the pseudocode (leaving those comments in-place!)
-    # Keep track of the total score
-    
-    # As long as there are still letters left in the hand:
-    
+    """     
+    number = calculateHandlen(hand) 
+    total_score = 0
+    while number:
+        display_hand = ""
+         
+        for key, value in hand.items():
+                
+            for value in range(value):
+                    
+                display_hand += key + " "      
+        
+        print ("Current Hand: ",  str(display_hand)) 
         # Display the hand
-        
+        word = raw_input('Enter word, or a "." to indicate that you are finished:') 
         # Ask user for input
-        
+        valid_word = isValidWord(word, hand, wordList) 
+         
+        if word == ".":
+            print ("Goodbye! Total score:", total_score)
+            break        
         # If the input is a single period:
-        
-            # End the game (break out of the loop)
+        # End the game (break out of the loop)        
+        if not valid_word:
+            print ("Invalid word, please try again.")
+        # If the word is not valid:    
+        # Reject invalid word (print a message followed by a blank line)
+        elif valid_word:
+             # Otherwise (the word is valid):
+            letter_score = getWordScore(word, n)
+            total_score+= letter_score
+            # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
+            print (word,  "earned ", letter_score, "points. Total: ", total_score, "points")
+            hand = updateHand(hand, word)
+            # Update the hand 
+            number = calculateHandlen(hand)                                
+        # Keep track of the total score                     
+        # As long as there are still letters left in the hand:               
+        #if number == 0:
+           
+        print ("Run out of letters. Total score: ",  total_score,  "points.")        
+        # Game is over (user entered a '.' or ran out of letters), so tell user the total score
 
-            
-        # Otherwise (the input is not a single period):
-        
-            # If the word is not valid:
-            
-                # Reject invalid word (print a message followed by a blank line)
-
-            # Otherwise (the word is valid):
-
-                # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
-                
-                # Update the hand 
-                
-
-    # Game is over (user entered a '.' or ran out of letters), so tell user the total score
-
-
+wordList = loadWords()
+print playHand({'w':1, 's':1, 't':2, 'a':1, 'o':1, 'f':1}, wordList, 7)
 #
 # Problem #5: Playing a game
 # 
@@ -261,6 +309,6 @@ def playGame(wordList):
 #
 # Build data structures used for entire session and play game
 #
-if __name__ == '__main__':
-    wordList = loadWords()
-    playGame(wordList)
+#if __name__ == '__main__':
+    #wordList = loadWords()
+  #  playGame(wordList)
