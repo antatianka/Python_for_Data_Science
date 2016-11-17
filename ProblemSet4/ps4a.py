@@ -24,14 +24,14 @@ def loadWords():
     Depending on the size of the word list, this function may
     take a while to finish.
     """
-    print("Loading word list from file...")
+    print "Loading word list from file..."
     # inFile: file
     inFile = open(WORDLIST_FILENAME, 'r')
     # wordList: list of strings
     wordList = []
     for line in inFile:
         wordList.append(line.strip().lower())
-    print("  ", len(wordList), "words loaded.")
+    print "  ", len(wordList), "words loaded."
     return wordList
 
 def getFrequencyDict(sequence):
@@ -251,19 +251,19 @@ def playHand(hand, wordList, n):
                     
                 display_hand += key + " "      
         
-        print ("Current Hand: ",  str(display_hand)) 
+        print "Current Hand: ",  str(display_hand) 
         # Display the hand
         word = raw_input('Enter word, or a "." to indicate that you are finished:') 
         # Ask user for input
         valid_word = isValidWord(word, hand, wordList) 
          
         if word == ".":
-            print ("Goodbye! Total score:", total_score)
+            print "Goodbye! Total score:", total_score
             break        
         # If the input is a single period:
         # End the game (break out of the loop)        
         if not valid_word:
-            print ("Invalid word, please try again.")
+            print "Invalid word, please try again."
         # If the word is not valid:    
         # Reject invalid word (print a message followed by a blank line)
         elif valid_word:
@@ -271,7 +271,7 @@ def playHand(hand, wordList, n):
             letter_score = getWordScore(word, n)
             total_score+= letter_score
             # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
-            print (word,  "earned ", letter_score, "points. Total: ", total_score, "points")
+            print word,  "earned ", letter_score, "points. Total: ", total_score, "points"
             hand = updateHand(hand, word)
             # Update the hand 
             number = calculateHandlen(hand)                                
@@ -279,11 +279,11 @@ def playHand(hand, wordList, n):
         # As long as there are still letters left in the hand:               
         #if number == 0:
            
-        print ("Run out of letters. Total score: ",  total_score,  "points.")        
+        print "Run out of letters. Total score: ",  total_score,  "points."        
         # Game is over (user entered a '.' or ran out of letters), so tell user the total score
 
-wordList = loadWords()
-print playHand({'w':1, 's':1, 't':2, 'a':1, 'o':1, 'f':1}, wordList, 7)
+#wordList = loadWords()
+
 #
 # Problem #5: Playing a game
 # 
@@ -300,8 +300,29 @@ def playGame(wordList):
  
     2) When done playing the hand, repeat from step 1    
     """
-    # TO DO ... <-- Remove this comment when you code this function
-    print("playGame not yet implemented.") # <-- Remove this line when you code the function
+    count = 0
+    while True: 
+        new_game = raw_input("Enter n to deal a new hand, r to replay the last hand, or e to end game:") 
+        if new_game == "r":
+            if count <=0: 
+                
+                print " You have not played a hand yet. Please play a new hand first!"
+            else:
+                game = playHand(hand, wordList, HAND_SIZE)
+            
+        elif new_game == "n":
+            hand = dealHand(HAND_SIZE)
+            game = playHand(hand, wordList, HAND_SIZE)
+            count =+ 1
+        
+        elif new_game == "e":
+            break
+            
+            
+        else:
+            print "Invalid command."
+          
+    return None 
    
 
 
@@ -309,6 +330,6 @@ def playGame(wordList):
 #
 # Build data structures used for entire session and play game
 #
-#if __name__ == '__main__':
-    #wordList = loadWords()
-  #  playGame(wordList)
+if __name__ == '__main__':
+    wordList = loadWords()
+    playGame(wordList)
