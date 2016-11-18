@@ -92,7 +92,8 @@ def test_updateHand():
         print("\tbut implementation of updateHand mutated the original hand!")
         print("\tNow the hand looks like this:", handCopy)
         
-        return # exit function
+        return 
+    # exit function
 
     print("SUCCESS: test_updateHand()")
 
